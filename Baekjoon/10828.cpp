@@ -35,20 +35,13 @@ int main()
       }
     }
     else if (c == "size")
-    {
       result = st.size();
-    }
     else if (c == "empty")
-    {
       result = st.empty() ? 1 : 0;
-    }
     else if (c == "top")
-    {
       result = st.empty() ? -1 : st.top();
-    }
 
     cout << result << '\n';
   }
-
   return 0;
 }
