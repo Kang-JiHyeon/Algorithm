@@ -4,64 +4,29 @@ using namespace std;
 
 int main()
 {
+  ios::sync_with_stdio(0);
+  cin.tie(0);
   int n;
   cin >> n;
-  stack<int> st1, st2, st3;
+  // 높이, 순서 쌍을 값으로 가지는 스택 선언
+  stack<pair<int, int>> st;
+  // 스택 초기값 삽입
+  st.push({100000001, 0});
 
-  for (int i = 0, t; i < n; i++)
+  for (int i = 1; i <= n; i++)
   {
-    cin >> t;
-    st1.push(t);
-  }
+    // 현재 탑 높이를 입력받는다.
+    int h;
+    cin >> h;
 
-  for (int i = 0, cur; i < n; i++)
-  {
-    if (!st1.empty())
-    {
-      cur = st1.top();
-      st1.pop();
-    }
-
-    while (1)
-    {
-      if (st1.empty())
-      {
-        st2.push(0);
-        break;
-      }
-
-      if (cur <= st1.top())
-      {
-        st2.push(st1.size());
-        break;
-      }
-      else
-      {
-        st3.push(st1.top());
-        st1.pop();
-      }
-    }
-
-    while (!st3.empty())
-    {
-      st1.push(st3.top());
-      st3.pop();
-    }
-  }
-  while (!st2.empty())
-  {
-    cout << st2.top() << ' ';
-    st2.pop();
+    // 현재 탑 높이보다 큰 높이를 가지는 탑을 찾고 싶다.
+    // 현재 탑 높이보다 이전 탑의 높이가 작을 때까지 직전의 값을 삭제
+    while (h > st.top().first)
+      st.pop();
+    // 현재 탑 높이보다 큰 탑을 찾았으니 출력
+    cout << st.top().second << ' ';
+    // 현재 탑 높이와 순서의 쌍을 스택에 삽입
+    st.push({h, i});
   }
   return 0;
 }
-
-// 탑높이 스택과 수신 스택 생성
-// 탑높이 스택에 탑 높이 차례대로 삽입
-// 최상단 pop(=현재 탑높이)
-// 현재 탑높이가 top값보다 작으면 탑높이 스택의 길이를 수신 스택에 push
-// 현재 탑높이가 top값보다 크면 탑높이 스택 pop
-// 4번 조건 만족할 때까지 반복
-// 만약 탑높이 스택이 비어있다면 수신 스택에 0을 push
-// 3~7과정을 n번 반복
-// 수신 스택의 최상단값부터 출력
